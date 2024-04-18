@@ -8,7 +8,7 @@ const HomeScreen = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <ImageBackground
-        source={require('../A5-chatapp-assets/Background.png')}
+        source={require('../assets/Background.png')}
         resizeMode="cover"
         style={styles.imageBackground}
       >
