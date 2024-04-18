@@ -12,7 +12,7 @@ const HomeScreen = ({ navigation }) => {
         resizeMode="cover"
         style={styles.imageBackground}
       >
-        <Text style={styles.title}>App Title</Text>
+        <Text style={styles.title}>Chat App</Text>
         <View style={styles.inputBox}>
           <TextInput
             style={styles.input}
@@ -24,10 +24,38 @@ const HomeScreen = ({ navigation }) => {
 
           <Text style={styles.label}>Choose Background Color:</Text>
           <View style={styles.colorOptions}>
-            <TouchableOpacity style={[styles.colorCircle, { backgroundColor: '#090C08' }]} onPress={() => setBackgroundColor('#090C08')} />
-            <TouchableOpacity style={[styles.colorCircle, { backgroundColor: '#474056' }]} onPress={() => setBackgroundColor('#474056')} />
-            <TouchableOpacity style={[styles.colorCircle, { backgroundColor: '#8A95A5' }]} onPress={() => setBackgroundColor('#8A95A5')} />
-            <TouchableOpacity style={[styles.colorCircle, { backgroundColor: '#B9C6AE' }]} onPress={() => setBackgroundColor('#B9C6AE')} />
+          <TouchableOpacity
+  accessible={true}
+  accessibilityLabel="Choose background color: Dark"
+  accessibilityHint="Lets you choose a dark background color for the chat screen."
+  accessibilityRole="button"
+  style={[styles.colorCircle, { backgroundColor: '#090C08' }]}
+  onPress={() => setBackgroundColor('#090C08')}
+/>
+<TouchableOpacity
+  accessible={true}
+  accessibilityLabel="Choose background color: Deep Gray"
+  accessibilityHint="Lets you choose a deep gray background color for the chat screen."
+  accessibilityRole="button"
+  style={[styles.colorCircle, { backgroundColor: '#474056' }]}
+  onPress={() => setBackgroundColor('#474056')}
+/>
+<TouchableOpacity
+  accessible={true}
+  accessibilityLabel="Choose background color: Light Gray"
+  accessibilityHint="Lets you choose a light gray background color for the chat screen."
+  accessibilityRole="button"
+  style={[styles.colorCircle, { backgroundColor: '#8A95A5' }]}
+  onPress={() => setBackgroundColor('#8A95A5')}
+/>
+<TouchableOpacity
+  accessible={true}
+  accessibilityLabel="Choose background color: Pale Spring Bud"
+  accessibilityHint="Lets you choose a pale spring bud background color for the chat screen."
+  accessibilityRole="button"
+  style={[styles.colorCircle, { backgroundColor: '#B9C6AE' }]}
+  onPress={() => setBackgroundColor('#B9C6AE')}
+/>
           </View>
           <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat', { name, backgroundColor })}>
             <Text style={styles.buttonText}>Start Chatting</Text>
@@ -95,7 +123,6 @@ const styles = StyleSheet.create({
     borderRadius: 25,
   },
   button: {
-    /* flex: 0.2, */
     backgroundColor: '#757083',
     padding: 15,
     borderRadius: 5,
@@ -106,7 +133,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: '600',
     color: '#FFFFFF',
-   },
+  },
 });
 
 export default HomeScreen;
