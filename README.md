@@ -1,6 +1,6 @@
 # Chat Application
 
-This is a React Native chat application that allows users to communicate in real-time. It features customizable backgrounds for chat screens and uses `react-native-gifted-chat` for the chat interface.
+This is a React Native demo chat application that allows users to communicate in real-time. It features customizable backgrounds for chat screens and uses `react-native-gifted-chat` for the chat interface.
 
 ## Features
 
