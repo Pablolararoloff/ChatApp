@@ -1,35 +1,40 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { StyleSheet, View } from 'react-native';
 import { GiftedChat, Bubble, Avatar } from "react-native-gifted-chat";
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 
 
-const Chat = ({ route, navigation }) => {
-  const { name, backgroundColor  } = route.params;
+const Chat = ({ db, route, navigation }) => {
+  const { name, backgroundColor } = route.params;
   const [messages, setMessages] = useState([]);
 
-  const onSend = (newMessages) => {
-    setMessages(previousMessages => GiftedChat.append(previousMessages, newMessages));
-  };
+  const onSend = useCallback((messages = []) => {
+    messages.forEach(message => {
+      const { _id, createdAt, text, user } = message;
+      addDoc(collection(db, "messages"), {
+        _id,
+        createdAt,
+        text,
+        user
+      });
+    });
+  }, []);
 
   useEffect(() => {
-    setMessages([
-      {
-        _id: 1,
-        text: 'Hello developer',
-        createdAt: new Date(),
-        user: {
-          _id: 2,
-          name: 'React Native',
-          avatar: 'https://placeimg.com/140/140/any',
-        },
-      },
-      {
-        _id: 2,
-        text: 'This is a system message',
-        createdAt: new Date(),
-        system: true,
-      },
-    ]);
+    const messagesRef = collection(db, "messages");
+    const q = query(messagesRef, orderBy("createdAt", "desc"));
+
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      const loadedMessages = snapshot.docs.map(doc => ({
+        _id: doc.id,
+        text: doc.data().text,
+        createdAt: doc.data().createdAt.toDate(),
+        user: doc.data().user
+      }));
+      setMessages(loadedMessages);
+    });
+
+    return () => unsubscribe();  // Clean up the subscription
   }, []);
 
 

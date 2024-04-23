@@ -1,9 +1,22 @@
 import React, { useState } from 'react';
-import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground } from 'react-native';
+import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
+import { getAuth, signInAnonymously } from "firebase/auth";
 
 const HomeScreen = ({ navigation }) => {
+  const auth = getAuth();
   const [name, setName] = useState('');
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+
+  const signInUser = async () => {
+    try {
+      await signInAnonymously(auth);
+      Alert.alert("Signed in Successfully!");
+      // After signing in, navigate to the Chat screen with required params
+      navigation.navigate('Chat', { name, backgroundColor });
+    } catch (error) {
+      Alert.alert("Error", `Unable to sign in: ${error.message}`);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -21,43 +34,37 @@ const HomeScreen = ({ navigation }) => {
             placeholder="Your Name"
             placeholderTextColor="#757083"
           />
-
           <Text style={styles.label}>Choose Background Color:</Text>
           <View style={styles.colorOptions}>
-          <TouchableOpacity
-  accessible={true}
-  accessibilityLabel="Choose background color: Dark"
-  accessibilityHint="Lets you choose a dark background color for the chat screen."
-  accessibilityRole="button"
-  style={[styles.colorCircle, { backgroundColor: '#090C08' }]}
-  onPress={() => setBackgroundColor('#090C08')}
-/>
-<TouchableOpacity
-  accessible={true}
-  accessibilityLabel="Choose background color: Deep Gray"
-  accessibilityHint="Lets you choose a deep gray background color for the chat screen."
-  accessibilityRole="button"
-  style={[styles.colorCircle, { backgroundColor: '#474056' }]}
-  onPress={() => setBackgroundColor('#474056')}
-/>
-<TouchableOpacity
-  accessible={true}
-  accessibilityLabel="Choose background color: Light Gray"
-  accessibilityHint="Lets you choose a light gray background color for the chat screen."
-  accessibilityRole="button"
-  style={[styles.colorCircle, { backgroundColor: '#8A95A5' }]}
-  onPress={() => setBackgroundColor('#8A95A5')}
-/>
-<TouchableOpacity
-  accessible={true}
-  accessibilityLabel="Choose background color: Pale Spring Bud"
-  accessibilityHint="Lets you choose a pale spring bud background color for the chat screen."
-  accessibilityRole="button"
-  style={[styles.colorCircle, { backgroundColor: '#B9C6AE' }]}
-  onPress={() => setBackgroundColor('#B9C6AE')}
-/>
+            <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="Dark background color"
+              style={[styles.colorCircle, { backgroundColor: '#090C08' }]}
+              onPress={() => setBackgroundColor('#090C08')}
+            />
+            <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="Deep Gray background color"
+              style={[styles.colorCircle, { backgroundColor: '#474056' }]}
+              onPress={() => setBackgroundColor('#474056')}
+            />
+            <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="Light Gray background color"
+              style={[styles.colorCircle, { backgroundColor: '#8A95A5' }]}
+              onPress={() => setBackgroundColor('#8A95A5')}
+            />
+            <TouchableOpacity
+              accessible={true}
+              accessibilityLabel="Pale Spring Bud background color"
+              style={[styles.colorCircle, { backgroundColor: '#B9C6AE' }]}
+              onPress={() => setBackgroundColor('#B9C6AE')}
+            />
           </View>
-          <TouchableOpacity style={styles.button} onPress={() => navigation.navigate('Chat', { name, backgroundColor })}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={signInUser}  // Update to call the async signInUser function directly
+          >
             <Text style={styles.buttonText}>Start Chatting</Text>
           </TouchableOpacity>
         </View>
