@@ -11,7 +11,7 @@ const HomeScreen = ({ navigation }) => {
     try {
       await signInAnonymously(auth);
       Alert.alert("Signed in Successfully!");
-      // After signing in, navigate to the Chat screen with required params
+
       navigation.navigate('Chat', { name, backgroundColor });
     } catch (error) {
       Alert.alert("Error", `Unable to sign in: ${error.message}`);
@@ -63,7 +63,7 @@ const HomeScreen = ({ navigation }) => {
           </View>
           <TouchableOpacity
             style={styles.button}
-            onPress={signInUser}  // Update to call the async signInUser function directly
+            onPress={signInUser}
           >
             <Text style={styles.buttonText}>Start Chatting</Text>
           </TouchableOpacity>

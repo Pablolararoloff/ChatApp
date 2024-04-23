@@ -34,17 +34,17 @@ const Chat = ({ db, route, navigation }) => {
       setMessages(loadedMessages);
     });
 
-    return () => unsubscribe();  // Clean up the subscription
+    return () => unsubscribe();
   }, []);
 
 
   useEffect(() => {
     navigation.setOptions({ title: name });
-  }, [name]); // Added name to dependency array to ensure the title updates if name changes.
+  }, [name]);
 
   const renderAvatar = (props) => {
     if (props.currentMessage.user._id === 1) {
-      return null; // Do not show an avatar for the user's own messages.
+      return null;
     }
     return (
       <Avatar
@@ -56,8 +56,8 @@ const Chat = ({ db, route, navigation }) => {
           left: {
             width: 40,
             height: 40,
-            borderRadius: 20, // Circle shape
-            backgroundColor: '#e0e0e0', // Placeholder color
+            borderRadius: 20,
+            backgroundColor: '#e0e0e0',
           }
         }}
       />
@@ -70,10 +70,10 @@ const Chat = ({ db, route, navigation }) => {
         {...props}
         wrapperStyle={{
           right: {
-            backgroundColor: '#3394c2', // Blue bubble for user messages
+            backgroundColor: '#3394c2',
           },
           left: {
-            backgroundColor: '#e0e0e0', // Gray bubble for others
+            backgroundColor: '#e0e0e0',
           }
         }}
         textStyle={{
@@ -94,9 +94,9 @@ const Chat = ({ db, route, navigation }) => {
         messages={messages}
         onSend={messages => onSend(messages)}
         renderBubble={renderBubble}
-        renderAvatar={renderAvatar} // Include the renderAvatar function in the GiftedChat component
+        renderAvatar={renderAvatar}
         user={{
-          _id: 1  // User's ID
+          _id: 1
         }}
       />
     </View>
