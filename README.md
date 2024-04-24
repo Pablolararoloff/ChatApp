@@ -1,6 +1,8 @@
 # Chat Application
 
-This is a React Native demo chat application that allows users to communicate in real-time. It features customizable backgrounds for chat screens and uses `react-native-gifted-chat` for the chat interface.
+Chat Application with Cloud Firestore Integration
+
+This React Native demo chat application has been upgraded to seamlessly integrate with Cloud Firestore, enabling real-time messaging and secure data storage in the cloud. Enjoy customizable chat screen backgrounds and improved accessibility features for screen readers on both iOS and Android devices.
 
 ## Features
 
