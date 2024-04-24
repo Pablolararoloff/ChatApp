@@ -5,7 +5,7 @@ import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firesto
 
 
 const Chat = ({ db, route, navigation }) => {
-  const { name, backgroundColor } = route.params;
+  const { name, backgroundColor, userID } = route.params;
   const [messages, setMessages] = useState([]);
 
   const onSend = useCallback((messages = []) => {
@@ -96,7 +96,7 @@ const Chat = ({ db, route, navigation }) => {
         renderBubble={renderBubble}
         renderAvatar={renderAvatar}
         user={{
-          _id: 1
+          _id: userID
         }}
       />
     </View>

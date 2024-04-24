@@ -9,10 +9,11 @@ const HomeScreen = ({ navigation }) => {
 
   const signInUser = async () => {
     try {
-      await signInAnonymously(auth);
+      const userCredential = await signInAnonymously(auth); 
       Alert.alert("Signed in Successfully!");
 
-      navigation.navigate('Chat', { name, backgroundColor });
+    
+      navigation.navigate('Chat', { name, backgroundColor, userID: userCredential.user.uid });
     } catch (error) {
       Alert.alert("Error", `Unable to sign in: ${error.message}`);
     }
