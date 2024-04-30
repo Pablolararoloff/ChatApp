@@ -10,6 +10,7 @@ This React Native demo chat application has been upgraded to seamlessly integrat
 - Customizable chat screen backgrounds.
 - Supports both iOS and Android devices.
 - Accessibility enhancements for screen readers.
+- Offline Message Storage using AsyncStorage.
 
 ## Prerequisites
 
