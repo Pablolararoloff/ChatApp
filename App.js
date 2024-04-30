@@ -45,7 +45,7 @@ const App = () => {
       enableNetwork(db);
     }
   }, [connectionStatus.isConnected]);
-  
+
   signInAnonymously(auth)
     .then(() => {
       console.log("User signed in anonymously");

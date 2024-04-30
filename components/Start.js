@@ -9,10 +9,10 @@ const Start = ({ navigation }) => {
 
   const signInUser = async () => {
     try {
-      const userCredential = await signInAnonymously(auth); 
+      const userCredential = await signInAnonymously(auth);
       Alert.alert("Signed in Successfully!");
 
-    
+
       navigation.navigate('Chat', { name, backgroundColor, userID: userCredential.user.uid });
     } catch (error) {
       Alert.alert("Error", `Unable to sign in: ${error.message}`);

@@ -1,27 +1,28 @@
 import { useState, useEffect } from "react";
-import { StyleSheet, View, Platform, KeyboardAvoidingView } from 'react-native';
-import { GiftedChat, Bubble, Avatar, InputToolbar} from "react-native-gifted-chat";
-import { collection, addDoc, onSnapshot, query, orderBy} from "firebase/firestore";
+import { StyleSheet, View, Platform, KeyboardAvoidingView, TouchableOpacity, Text } from 'react-native';
+import { GiftedChat, Bubble, Avatar, InputToolbar } from "react-native-gifted-chat";
+import { collection, addDoc, onSnapshot, query, orderBy } from "firebase/firestore";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import CustomActions from './CustomActions';
 import MapView from 'react-native-maps';
+import { Audio } from "expo-av";
+
 
 
 const Chat = ({ db, route, navigation, isConnected, storage }) => {
   const { userID, backgroundColor, name } = route.params;
   const [messages, setMessages] = useState([]);
+  let soundObject = null;
 
   let unsubMessages;
 
   useEffect(() => {
     navigation.setOptions({ title: name });
-
     if (isConnected === true) {
-
       if (unsubMessages) unsubMessages();
       unsubMessages = null;
-
-      const q = query(collection(db, "messages"), orderBy("createdAt", "desc"));
+      const q = query(collection(db, "messages"),
+        orderBy("createdAt", "desc"));
       unsubMessages = onSnapshot(q, (docs) => {
         let newMessages = [];
         docs.forEach(doc => {
@@ -35,9 +36,9 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
         setMessages(newMessages);
       })
     } else loadCachedMessages();
-
     return () => {
       if (unsubMessages) unsubMessages();
+      if (soundObject) soundObject.unloadAsync();
     }
   }, [isConnected]);
 
@@ -148,6 +149,7 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
         renderAvatar={renderAvatar}
         renderActions={renderCustomActions}
         renderCustomView={renderCustomView}
+        renderMessageAudio={renderAudioBubble}
         user={{
           _id: userID,
           name
@@ -157,6 +159,51 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
     </View>
   )
 }
+
+const renderAudioBubble = (props) => {
+  return <View {...props}>
+    <TouchableOpacity
+      style={{
+        backgroundColor: "#FF0", borderRadius: 10, margin: 5
+      }}
+      onPress={async () => {
+        const { sound } = await Audio.Sound.createAsync({
+          uri:
+            props.currentMessage.audio
+        });
+        await sound.playAsync();
+      }}>
+      <Text style={{
+        textAlign: "center", color: 'black', padding:
+          5
+      }}>Play Sound</Text>
+    </TouchableOpacity>
+  </View>
+}
+
+const renderMessageAudio = (props) => {
+  return <View {...props}>
+    <TouchableOpacity
+      style={{
+        backgroundColor: "#FF0", borderRadius: 10, margin: 5
+      }}
+      onPress={async () => {
+        if (soundObject) soundObject.unloadAsync();
+        const { sound } = await Audio.Sound.createAsync({
+          uri:
+            props.currentMessage.audio
+        });
+        soundObject = sound;
+        await sound.playAsync();
+      }}>
+      <Text style={{
+        textAlign: "center", color: 'black', padding:
+          5
+      }}>Play Sound</Text>
+    </TouchableOpacity>
+  </View>
+}
+
 
 const styles = StyleSheet.create({
   container: {
