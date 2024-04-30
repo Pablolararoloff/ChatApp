@@ -1,18 +1,21 @@
 import Start from './components/Start';
 import Chat from './components/Chat';
-import React, { useEffect } from 'react';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import { getAuth, signInAnonymously } from "firebase/auth";
 
+// import react Navigation
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { LogBox, Alert } from 'react-native';
-const Stack = createNativeStackNavigator();
 
-import { getAuth, signInAnonymously } from 'firebase/auth';
+// import functions for initializing firestore
 import { initializeApp } from "firebase/app";
-import { getFirestore, enableNetwork, disableNetwork } from "firebase/firestore";
-import { useNetInfo } from '@react-native-community/netinfo';
+import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+import { useNetInfo } from '@react-native-community/netinfo';
+import { useEffect } from 'react';
+import { Alert, LogBox } from "react-native";
+
+// Create the navigator
+const Stack = createNativeStackNavigator();
 
 LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
 
@@ -28,10 +31,11 @@ const App = () => {
     appId: "1:872367595184:web:70d3d64adef02ad73e6575"
   };
 
+  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
-  const auth = getAuth(app);
   const db = getFirestore(app);
   const storage = getStorage(app);
+  const auth = getAuth(app);
 
   useEffect(() => {
     if (connectionStatus.isConnected === false) {

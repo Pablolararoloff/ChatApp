@@ -1,8 +1,8 @@
-import React, { useState } from 'react';
+import { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { getAuth, signInAnonymously } from "firebase/auth";
 
-const HomeScreen = ({ navigation }) => {
+const Start = ({ navigation }) => {
   const auth = getAuth();
   const [name, setName] = useState('');
   const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
@@ -144,4 +144,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default HomeScreen;
+export default Start;
