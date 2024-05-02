@@ -6,6 +6,7 @@ This React Native demo chat application has been upgraded to seamlessly integrat
 
 <img src="https://github.com/pablocubo/ChatApp/assets/135388057/8ebf2d37-ee92-4d0d-b7e4-3c9ce462791a" width="200">
 <img src="https://github.com/pablocubo/ChatApp/assets/135388057/72e59556-2da4-4d84-b417-82a3c31f0984" width="200">
+<img src="https://github.com/pablocubo/ChatApp/assets/135388057/d5877759-aa5c-44d5-bef9-6a64d492e90c" width="200">
 
 
 
