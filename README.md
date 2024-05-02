@@ -4,8 +4,9 @@ Chat Application with Cloud Firestore Integration
 
 This React Native demo chat application has been upgraded to seamlessly integrate with Cloud Firestore, enabling real-time messaging and secure data storage in the cloud. Enjoy customizable chat screen backgrounds and improved accessibility features for screen readers on both iOS and Android devices.
 
-![Untitled-1](https://github.com/pablocubo/ChatApp/assets/135388057/8ebf2d37-ee92-4d0d-b7e4-3c9ce462791a)
-![Untitled-3](https://github.com/pablocubo/ChatApp/assets/135388057/72e59556-2da4-4d84-b417-82a3c31f0984)
+<img src="https://github.com/pablocubo/ChatApp/assets/135388057/8ebf2d37-ee92-4d0d-b7e4-3c9ce462791a" width="200">
+<img src="https://github.com/pablocubo/ChatApp/assets/135388057/72e59556-2da4-4d84-b417-82a3c31f0984" width="200">
+
 
 
 ## Features
