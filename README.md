@@ -10,6 +10,16 @@ This React Native demo chat application has been upgraded to seamlessly integrat
 
 
 
+## Technologies Used
+
+- React Native
+- Expo
+- Expo ImagePicker
+- Expo Location
+- Google Firestore/Firebase
+- Gifted Chat Library
+- Android Studio
+
 ## Features
 
 - Real-time messaging.
@@ -17,6 +27,9 @@ This React Native demo chat application has been upgraded to seamlessly integrat
 - Supports both iOS and Android devices.
 - Accessibility enhancements for screen readers.
 - Offline Message Storage using AsyncStorage.
+- Audio recording
+- Image sharing
+- location sharing
 
 ## Prerequisites
 
@@ -31,8 +44,15 @@ To install the Chat Application, follow these steps:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/chat-app.git
+   git clone https://github.com/pablocubo/ChatApp
 
-2. Navigate to the project directory: cd chat-app
+2. Navigate to the project directory
 3. Install dependencies: npm install
 4. To run the Chat Application: npm start
+   
+## Installation
+
+- Download and connect the expo app on your mobile device
+- Android Studio (android)
+- Xcode (iOS)
+
