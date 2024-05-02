@@ -52,7 +52,7 @@ To install the Chat Application, follow these steps:
    
 ## Testing Options
 
-- Download and connect the expo app on your mobile device
-- Android Studio (android)
-- Xcode (iOS)
+- Download and connect the expo app on your mobile device. https://developer.android.com/studio?hl=es-419
+- Scan the barcode directly using your phone's camera on both iOS and Android devices.
+
 
