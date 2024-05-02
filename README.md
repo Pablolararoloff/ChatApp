@@ -50,7 +50,7 @@ To install the Chat Application, follow these steps:
 3. Install dependencies: npm install
 4. To run the Chat Application: npm start
    
-## Installation
+## Testing Options
 
 - Download and connect the expo app on your mobile device
 - Android Studio (android)
