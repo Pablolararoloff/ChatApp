@@ -1,15 +1,18 @@
+// Core imports
 import Start from './components/Start';
 import Chat from './components/Chat';
 import { getAuth, signInAnonymously } from "firebase/auth";
 
-// import react Navigation
+// Navigation imports
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-// import functions for initializing firestore
+// Firebase initialization and networking
 import { initializeApp } from "firebase/app";
 import { getFirestore, disableNetwork, enableNetwork } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
+
+// Utilities
 import { useNetInfo } from '@react-native-community/netinfo';
 import { useEffect } from 'react';
 import { Alert, LogBox } from "react-native";
@@ -17,11 +20,14 @@ import { Alert, LogBox } from "react-native";
 // Create the navigator
 const Stack = createNativeStackNavigator();
 
+// Ignore specific warnings in the app
 LogBox.ignoreLogs(["AsyncStorage has been extracted from"]);
 
+// Main App component
 const App = () => {
   const connectionStatus = useNetInfo();
 
+  // Firebase configuration
   const firebaseConfig = {
     apiKey: "AIzaSyAZI-G2QjVwM4NMi-ojDZR0HA1NEe7oIiQ",
     authDomain: "chatapp-bed9b.firebaseapp.com",
@@ -37,15 +43,17 @@ const App = () => {
   const storage = getStorage(app);
   const auth = getAuth(app);
 
+  // Effect for managing network status with Firestore
   useEffect(() => {
     if (connectionStatus.isConnected === false) {
       Alert.alert("Connection Lost!");
-      disableNetwork(db);
+      disableNetwork(db); // Disable Firestore network access when offline
     } else if (connectionStatus.isConnected === true) {
-      enableNetwork(db);
+      enableNetwork(db); // Re-enable Firestore network access when online
     }
   }, [connectionStatus.isConnected]);
 
+  // Sign in user anonymously
   signInAnonymously(auth)
     .then(() => {
       console.log("User signed in anonymously");
@@ -54,6 +62,7 @@ const App = () => {
       console.error("Anonymous sign-in failed:", error);
     });
 
+    // Main render method
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Start">

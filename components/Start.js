@@ -2,23 +2,26 @@ import { useState } from "react";
 import { StyleSheet, View, Text, TextInput, TouchableOpacity, ImageBackground, Alert } from 'react-native';
 import { getAuth, signInAnonymously } from "firebase/auth";
 
+// The Start component serves as the entry point for users to authenticate and set up initial preferences.
 const Start = ({ navigation }) => {
-  const auth = getAuth();
-  const [name, setName] = useState('');
-  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF');
+  const auth = getAuth(); // Initialize Firebase authentication for anonymous sign-in
+  const [name, setName] = useState(''); // State to store the user's name input
+  const [backgroundColor, setBackgroundColor] = useState('#FFFFFF'); // State to store the user's selected background color
 
+  // Function to handle user sign-in and navigation to the Chat screen with user preferences
   const signInUser = async () => {
     try {
       const userCredential = await signInAnonymously(auth);
       Alert.alert("Signed in Successfully!");
 
-
+      // Navigate to the Chat screen and pass user's preferences as parameters
       navigation.navigate('Chat', { name, backgroundColor, userID: userCredential.user.uid });
     } catch (error) {
       Alert.alert("Error", `Unable to sign in: ${error.message}`);
     }
   };
 
+  // Render the UI for the Start screen including text input for name and color selection
   return (
     <View style={styles.container}>
       <ImageBackground
@@ -74,6 +77,7 @@ const Start = ({ navigation }) => {
   );
 };
 
+// Stylesheet for Start screen
 const styles = StyleSheet.create({
   container: {
     display: 'flex',

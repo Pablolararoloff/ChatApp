@@ -8,7 +8,7 @@ import MapView from 'react-native-maps';
 import { Audio } from "expo-av";
 
 
-
+// Main Chat component that handles the messaging functionality
 const Chat = ({ db, route, navigation, isConnected, storage }) => {
   const { userID, backgroundColor, name } = route.params;
   const [messages, setMessages] = useState([]);
@@ -16,6 +16,7 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
 
   let unsubMessages;
 
+  // Handles fetching and updating messages when online status changes
   useEffect(() => {
     navigation.setOptions({ title: name });
     if (isConnected === true) {
@@ -42,11 +43,12 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
     }
   }, [isConnected]);
 
+  // Load messages from local storage when offline
   const loadCachedMessages = async () => {
     const cachedMessages = await AsyncStorage.getItem("messages") || [];
     setMessages(JSON.parse(cachedMessages));
   }
-
+  // Cache messages to local storage
   const cacheMessages = async (messagesToCache) => {
     try {
       await AsyncStorage.setItem('messages', JSON.stringify(messagesToCache));
@@ -54,16 +56,16 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
       console.log(error.message);
     }
   }
-
+  // Function to handle sending messages
   const onSend = (newMessages) => {
     addDoc(collection(db, "messages"), newMessages[0])
   }
-
+  // Conditional rendering of the input toolbar based on connectivity
   const renderInputToolbar = (props) => {
     if (isConnected === true) return <InputToolbar {...props} />;
     else return null;
   }
-
+  // Render user avatars
   const renderAvatar = (props) => {
     if (props.currentMessage.user._id === userID) {
       return null;
@@ -86,7 +88,7 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
       />
     );
   };
-
+  // Customize the look of the chat bubbles
   const renderBubble = (props) => {
     return (
       <Bubble
@@ -111,11 +113,11 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
     );
   };
 
-
+  // Custom actions for attachments and more
   const renderCustomActions = (props) => {
     return <CustomActions onSend={onSend} storage={storage} {...props} userID={userID} />;
   };
-
+  // Render custom views for messages, like location
   const renderCustomView = (props) => {
     const { currentMessage } = props;
     if (currentMessage.location) {
@@ -161,50 +163,24 @@ const Chat = ({ db, route, navigation, isConnected, storage }) => {
 }
 
 const renderAudioBubble = (props) => {
-  return <View {...props}>
-    <TouchableOpacity
-      style={{
-        backgroundColor: "#FF0", borderRadius: 10, margin: 5
-      }}
-      onPress={async () => {
-        const { sound } = await Audio.Sound.createAsync({
-          uri:
-            props.currentMessage.audio
-        });
-        await sound.playAsync();
-      }}>
-      <Text style={{
-        textAlign: "center", color: 'black', padding:
-          5
-      }}>Play Sound</Text>
-    </TouchableOpacity>
-  </View>
-}
+  if (props.currentMessage.audio) {
+    return (
+      <View style={styles.audioBubble}>
+        <TouchableOpacity onPress={() => playSound(props.currentMessage.audio)}>
+          <Text style={styles.audioText}>Play Audio</Text>
+        </TouchableOpacity>
+      </View>
+    );
+  }
+  return <Bubble {...props} />;
+};
 
-const renderMessageAudio = (props) => {
-  return <View {...props}>
-    <TouchableOpacity
-      style={{
-        backgroundColor: "#FF0", borderRadius: 10, margin: 5
-      }}
-      onPress={async () => {
-        if (soundObject) soundObject.unloadAsync();
-        const { sound } = await Audio.Sound.createAsync({
-          uri:
-            props.currentMessage.audio
-        });
-        soundObject = sound;
-        await sound.playAsync();
-      }}>
-      <Text style={{
-        textAlign: "center", color: 'black', padding:
-          5
-      }}>Play Sound</Text>
-    </TouchableOpacity>
-  </View>
-}
+const playSound = async (uri) => {
+  const { sound } = await Audio.Sound.createAsync({ uri });
+  await sound.playAsync();
+};
 
-
+// Styles for the Chat component
 const styles = StyleSheet.create({
   container: {
     flex: 1
